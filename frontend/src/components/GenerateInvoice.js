@@ -4,20 +4,31 @@ import { generateInvoice } from '../serviceRequests/lightningNode'
 const GenerateInvoice = () => {
   const [invoiceAmount, setInvoiceAmount] = useState(0)
   const [invoiceMemo, setInvoiceMemo] = useState("")
-  const [invoiceData, setInvoiceData] = useState({})
+  const [invoiceData, setInvoiceData] = useState("")
 
   useEffect(() => {
 
   }, [])
 
-  const handleGenerateInvoice = async (amount, memo) => {
-    const invoice = await generateInvoice(amount, memo);
+  const handleGenerateInvoice = async () => {
+    const invoice = await generateInvoice(invoiceAmount, invoiceMemo);
+    console.log(invoice)
+    setInvoiceData(JSON.stringify(invoice))
   }
 
   return (
-    <div>
-      <input type="number" onChange={setInvoiceAmount} value={invoiceAmount} />
-      <input type="text" onChange={setInvoiceMemo} value={invoiceMemo} />
+    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+      <div style={{display: 'flex', padding: '10px'}}>
+        Invoice Amount (sats): {'   '}  
+        <input type="number" onChange={e => setInvoiceAmount(e.target.value)} value={invoiceAmount} />
+        <div style={{width: '10px'}} />
+        Invoice Memo:  {'   '}
+        <input type="text" onChange={e => setInvoiceMemo(e.target.value)} value={invoiceMemo} />
+      </div>
+      <input value="Generate Invoice!" type="button" onClick={() => handleGenerateInvoice()} style={{width: '150px'}} />
+      <p>
+        {invoiceData ? invoiceData : ""}
+      </p>
     </div>
   )
 

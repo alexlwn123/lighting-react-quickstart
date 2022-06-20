@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "lnd-async": "^4.1.3"
+  }
+}
